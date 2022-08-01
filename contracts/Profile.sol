@@ -60,13 +60,70 @@ contract Records {
     } 
 
     // function to retrive patient information
-    function retrievePatient(address patient) public view returns(Patient memory p) {
+    function retrievePatient(address patient) public view returns(
+        string memory,
+        uint,
+        string memory,
+        uint256,
+        uint256,
+        string memory,
+        uint256,
+        string memory,
+        uint256,
+        string memory) {
         require(accessList[patient][msg.sender] == true);
         require(insuranceList[msg.sender] == true || hospitalList[msg.sender] == true);
 
+        Patient memory p;
         p = patientList[patient];
 
-        return p;
+        return (p.name, p.age, p.gender, p.height, p.weight, p.patient_address, p.phone, p.email, p.dateCreated, p.recordhash);
+    }
+
+    // function to retrive patient information by the patient himself
+    function getPatient(address patient) public view returns(
+        string memory,
+        uint,
+        string memory,
+        uint256,
+        uint256,
+        string memory,
+        uint256,
+        string memory,
+        uint256,
+        string memory) {
+        Patient memory p;
+        p = patientList[patient];
+
+        require(p.owner == msg.sender, " you do not have access to this information");
+
+        return (p.name, p.age, p.gender, p.height, p.weight, p.patient_address, p.phone, p.email, p.dateCreated, p.recordhash);
+    }
+
+    // function to retrive hospital information
+    function retrieveHospital(address hospital) public view returns(
+        string memory,
+        string memory,
+        string memory,
+        string memory) {
+
+        Hospital memory h;
+        h = hospitalRecord[hospital];
+
+        return (h.name, h.hospitalAddress, h.email, h.website);
+    }
+
+    // function to retrive insurance information
+    function retrieveInsurance(address insurance) public view returns(
+        string memory,
+        string memory,
+        string memory,
+        string memory) {
+
+        Insurance memory i;
+        i = insuranceRecord[insurance];
+
+        return (i.name, i.insuranceAddress, i.email, i.website);
     }
 
     // function to grant access
