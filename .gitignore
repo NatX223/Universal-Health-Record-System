@@ -9,5 +9,5 @@ typechain-types
 cache
 artifacts
 scripts
-src
+abi.js
 

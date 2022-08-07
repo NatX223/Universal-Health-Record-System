@@ -23,6 +23,8 @@ contract Records {
 
     // mapping a patients record to an address
     mapping (address => Patient) internal patientList;
+    // mapping to track if a patient has regitered or not
+    mapping (address => bool) internal registered;
 
     // struct for a hospital instance
     struct Hospital {
@@ -38,7 +40,7 @@ contract Records {
     // mapping to keep hold of hospitals records
     mapping (address => Hospital) hospitalRecord;
 
-    // mapping for an insurance instance
+    // struct for an insurance instance
     struct Insurance {
         address owner;
         string name;
@@ -150,6 +152,7 @@ contract Records {
         string memory _patient_address,
         uint256 _phone,
         string memory _email) public returns(bool b) {
+        require(registered[msg.sender] != true, "You can not register twice");
         Patient memory p;
 
         p.owner = msg.sender;
@@ -166,6 +169,7 @@ contract Records {
         p.recordhash = " ";
 
         patientList[msg.sender] = p;
+        registered[msg.sender] = true;
 
         b = true;
 
@@ -214,5 +218,18 @@ contract Records {
         b = true;
         return b;
     }
+
+    // function to add patient record
+    function addPatientRecord(address patient, string memory ipfsHash) public view returns(bool b) {
+        require(accessList[patient][msg.sender] == true);
+        require(insuranceList[msg.sender] == true || hospitalList[msg.sender] == true);
+
+        Patient memory p;
+        p = patientList[patient];
+        p.recordhash = ipfsHash;
+
+        return true;
+    }
+
 
 }
