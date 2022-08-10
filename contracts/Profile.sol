@@ -21,6 +21,32 @@ contract Records {
         string recordhash; // the folder hash of the IPFS folder where records will be kept
     }
 
+    mapping (address => patientHealthRecord[]) HRecord;
+    mapping (address => patientInsuranceRecord[]) IRecord;
+
+    // a struct for patient health record
+    struct patientHealthRecord {
+        string diagnosis;
+        string prescription;
+        string treatmentForm;
+        string Doctor;
+        string admissionDate;
+        string dischargeDate;
+        string summary;
+    }
+
+    struct patientInsuranceRecord {
+        string policyName;
+        uint policyId;
+        string policyType;
+        uint policyLimit;
+        string policyAgent;
+        string startDate;
+        string endDate;
+        string summary;
+    }
+
+
     // mapping a patients record to an address
     mapping (address => Patient) internal patientList;
     // mapping to track if a patient has regitered or not
@@ -165,8 +191,6 @@ contract Records {
         p.phone = _phone;
         p.email = _email;
         p.dateCreated = block.timestamp;
-        // setting the innitial record hash to empty string, will be later updated to contain real record hash
-        p.recordhash = " ";
 
         patientList[msg.sender] = p;
         registered[msg.sender] = true;
@@ -194,6 +218,8 @@ contract Records {
 
         hospitalRecord[msg.sender] = h;
 
+        hospitalList[msg.sender] = true;
+
         b = true;
         return b;
     }
@@ -215,6 +241,8 @@ contract Records {
 
         insuranceRecord[msg.sender] = i;
 
+        insuranceList[msg.sender] = true;
+
         b = true;
         return b;
     }
@@ -231,5 +259,88 @@ contract Records {
         return true;
     }
 
+    // TODO
+
+    //create function to add and retrieve health and insurance records
+
+    function addHealthRecord(
+        address patient,
+        string memory _diagnosis,
+        string memory _prescription,
+        string memory _treatmentForm,
+        string memory _Doctor,
+        string memory _admissionDate,
+        string memory _dischargeDate,
+        string memory _summary) public returns (bool) {
+
+        require(accessList[patient][msg.sender] == true);
+        require(hospitalList[msg.sender] == true);
+
+        patientHealthRecord memory p;
+
+        p.diagnosis = _diagnosis;
+        p.prescription = _prescription;
+        p.treatmentForm = _treatmentForm;
+        p.Doctor = _Doctor;
+        p.admissionDate = _admissionDate;
+        p.dischargeDate = _dischargeDate;
+        p.summary = _summary;
+
+        HRecord[patient].push(p);
+
+        bool b = true;
+
+        return b;
+    }
+
+    function addInsuranceRecord(
+        address patient,
+        string memory _policyName,
+        uint _policyId,
+        string memory _policyType,
+        uint _policyLimit,
+        string memory _policyAgent,
+        string memory _startDate,
+        string memory _endDate,
+        string memory _summary) public returns (bool) {
+
+        require(accessList[patient][msg.sender] == true);
+        require(insuranceList[msg.sender] == true);
+
+        patientInsuranceRecord memory p;
+
+        p.policyName = _policyName;
+        p.policyId = _policyId;
+        p.policyType = _policyType;
+        p.policyLimit = _policyLimit;
+        p.policyAgent = _policyAgent;
+        p.startDate = _startDate;
+        p.endDate = _endDate;
+        p.summary = _summary;
+
+        IRecord[patient].push(p);
+
+        bool b = true;
+
+        return b;
+    }
+
+    function retrievePatientHealthRecord(address patient) public view returns (patientHealthRecord[] memory p) {
+        require(accessList[patient][msg.sender] == true);
+        require(insuranceList[msg.sender] == true || hospitalList[msg.sender] == true);
+
+        patientHealthRecord[] memory p = HRecord[patient];
+
+        return p;
+    }
+
+    function retrievePatientInsuranceRecord(address patient) public view returns (patientInsuranceRecord[] memory p) {
+        require(accessList[patient][msg.sender] == true);
+        require(insuranceList[msg.sender] == true || hospitalList[msg.sender] == true);
+
+        patientInsuranceRecord[] memory p = IRecord[patient];
+
+        return p;
+    }
 
 }

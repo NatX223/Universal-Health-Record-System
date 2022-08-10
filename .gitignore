@@ -8,6 +8,5 @@ typechain-types
 #Hardhat files
 cache
 artifacts
-scripts
 abi.js
-
+.env
