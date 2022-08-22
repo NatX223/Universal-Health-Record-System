@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Institution</title>
+    <script src="https://unpkg.com/moralis-v1@1.11.0/dist/moralis.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+  </head>
+
+  <body>
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <h1 class="text-center font-monospace">Institution page</h1>
+
+            <div id="init">
+                <p>You need to connnect you wallet</p>
+                <button id="connect" class="btn btn-primary">Connect Wallet</button>
+        
+              </div>
+
+              <div id="main">
+                <div>
+                    <h5>Institution: </h5>
+                    <div id="institutionaddress"></div>
+                </div> <br><br>
+                
+                <div id="details"></div> <br><br>
+            
+                <div>
+                    <label for="address">Enter Patient address</label>
+                    <input type="text" name="address" id="address"> <br>
+                    <button id="btn-retrieve-medical" class="btn btn-info">retrieve medical info</button> <br>
+                    <button id="btn-retrieve-insurance" class="btn btn-info">retrieve insurance info</button>
+                </div> <br><br>
+            
+                <div id="patient-view">
+            
+                </div>
+                <br><br>
+            
+                <div>
+                    <h5 id="toggle-medicalform">Add medical information</h5>
+                </div> <br><br>
+                <div id="medical-form">
+                    <h5>Diagnosis</h5>
+                    <label for="Haddress">Patient Address</label>
+                    <input type="text" id="Haddress"> <br>
+                    <label for="diagnosis summary">Diagnosis</label>
+                    <input type="text" id="diagnosis summary"> <br>
+                    <label for="diagnosis summary">prescription</label>
+                    <input type="text" id="prescription"> <br>
+                    <h5>Treatment</h5>
+                    <label for="treatment">Form of Treatment</label>
+                    <input type="text" id="treatment"> <br>
+                    <label for="doctor">Doctor in charge of treatment</label>
+                    <input type="text" id="doctor"> <br>
+                    <label for="admission">Date of admission</label>
+                    <input type="date" id="admission"> <br>
+                    <label for="discharge">Date of discharge</label>
+                    <input type="date" id="discharge"> <br>
+                    <label for="treatment-summary">Summary</label>
+                    <input type="text" id="treatment-summary"> <br>
+                    <button id="btn-medsummit" class="btn btn-primary">Submit</button>
+            
+                </div> <br>
+    
+                        <div>
+                            <h5 id="toggle-insuranceform">Add insurance information</h5>
+                        </div> <br><br>
+                        <div id="insurance-form">
+                            <label for="Iaddress">Patient Address</label>
+                            <input type="text" id="Iaddress"> <br>
+                            <h5>Policy</h5>
+                            <label for="policy-name">Policy name</label>
+                            <input type="text" id="policy-name"> <br>
+                            <label for="policy-number">Policy number</label>
+                            <input type="number" id="policy-number"> <br>
+                            <label for="policy-type">Policy type</label>
+                            <input type="text" id="policy-type"> <br>
+                            <label for="policy-limit">Policy limit</label>
+                            <input type="number" id="policy-limit"> <br>
+                            <label for="policy-agent">Policy agent</label>
+                            <input type="text" id="policy-agent"> <br>
+                            <label for="policy-start">Policy start date</label>
+                            <input type="date" id="policy-start"> <br>
+                            <label for="policy-end">Policy end date</label>
+                            <input type="date" id="policy-end"> <br>
+                            <label for="policy-summary">Summary</label>
+                            <input type="text" id="policy-summary"> <br>
+                            <button id="btn-insuresummit" class="btn btn-primary">Submit</button>
+                    
+                        </div> <br>
+    
+              </div>
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="Institution.js"></script>
+  </body>

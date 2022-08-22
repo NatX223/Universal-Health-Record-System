@@ -21,6 +21,10 @@ contract Records {
         string recordhash; // the folder hash of the IPFS folder where records will be kept
     }
 
+    // a mapping of an address to an array of the patients record ipfs hashes
+    mapping (address => string[]) medicalHash;
+    mapping (address => string[]) insuranceHash;
+
     mapping (address => patientHealthRecord[]) HRecord;
     mapping (address => patientInsuranceRecord[]) IRecord;
 
@@ -329,7 +333,7 @@ contract Records {
         require(accessList[patient][msg.sender] == true);
         require(insuranceList[msg.sender] == true || hospitalList[msg.sender] == true);
 
-        patientHealthRecord[] memory p = HRecord[patient];
+        p = HRecord[patient];
 
         return p;
     }
@@ -338,7 +342,49 @@ contract Records {
         require(accessList[patient][msg.sender] == true);
         require(insuranceList[msg.sender] == true || hospitalList[msg.sender] == true);
 
-        patientInsuranceRecord[] memory p = IRecord[patient];
+        p = IRecord[patient];
+
+        return p;
+    }
+
+    function addMedicalRecordHash(address patient, string memory recordHash) public returns (bool) {
+
+        require(accessList[patient][msg.sender] == true);
+        require(hospitalList[msg.sender] == true);
+
+        medicalHash[patient].push(recordHash);
+
+        bool b = true;
+
+        return b;
+    }
+
+    function addInsuranceRecordHash(address patient, string memory recordHash) public returns (bool) {
+
+        require(accessList[patient][msg.sender] == true);
+        require(hospitalList[msg.sender] == true);
+
+        insuranceHash[patient].push(recordHash);
+
+        bool b = true;
+
+        return b;
+    }
+
+    function retrieveMedicalRecordHash(address patient) public view returns (string[] memory p) {
+        require(accessList[patient][msg.sender] == true);
+        require(insuranceList[msg.sender] == true || hospitalList[msg.sender] == true);
+
+        p = medicalHash[patient];
+
+        return p;
+    }
+
+    function retrieveInsuranceRecordHash(address patient) public view returns (string[] memory p) {
+        require(accessList[patient][msg.sender] == true);
+        require(insuranceList[msg.sender] == true || hospitalList[msg.sender] == true);
+
+        p = insuranceHash[patient];
 
         return p;
     }
