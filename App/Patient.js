@@ -691,7 +691,7 @@ async function revokeAccess() {
     let hospital_address = document.getElementById("address").value;
 
 	const Contract = new ethers.Contract(contractAddress, abi, signer);
-    const data = await Contract.retriveHospital(hospital_address);
+    const data = await Contract.retrieveHospital(hospital_address);
 
     console.log(data);
 
@@ -719,7 +719,7 @@ async function revokeAccess() {
     let hospital_address = document.getElementById("address").value;
 	
     const Contract = new ethers.Contract(contractAddress, abi, signer);
-    const data = await Contract.retriveInsurance(hospital_address);
+    const data = await Contract.retrieveInsurance(hospital_address);
 
     console.log(data);
 
